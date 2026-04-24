@@ -65,6 +65,7 @@ If your workflow involves large context, Gemini is the strongest choice for the 
 - **Two-tier mapping**: Like DeepSeek, Gemini has two meaningful tiers rather than three. Sonnet and Haiku collapse to the same model.
 - **Extended thinking**: Gemini models don't support Claude's extended thinking. Skills relying on `thinking` blocks will degrade gracefully.
 - **Parallel subagents**: Non-Claude models handle sequential subagent orchestration more reliably. The SessionStart hook advises sequential launches.
+- **Custom agents**: Gemini launches custom agents successfully but may report the wrong `subagent_type` in its text output. The agent still executes correctly — this is a reporting artifact, not a functional issue.
 
 ## Troubleshooting
 

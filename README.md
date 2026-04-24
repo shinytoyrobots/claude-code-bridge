@@ -107,6 +107,7 @@ What Anthropic prohibits is third-party tools extracting and proxying Claude sub
 - **Compatibility**: Skills that rely on Claude-specific behavior (extended thinking, certain tool-calling quirks) may degrade on other models. Most skills work unchanged.
 - **LiteLLM is required**: Claude Code speaks Anthropic wire format exclusively. LiteLLM translates. There is no way around this dependency.
 - **The hook is optional but recommended**: The SessionStart hook (`morph-session`) helps non-Claude models understand Claude Code's Agent tool and subagent patterns. Without it, models may fumble on tool calls.
+- **Custom agents are supported**: Custom agent definitions in `~/.claude/commands/agents/` are enumerated by the SessionStart hook and injected as guidance so non-Claude models can launch them via `subagent_type: general-purpose`. DeepSeek and Gemini follow the convention reliably; OpenAI may choose a different subagent type.
 
 ## Troubleshooting
 
