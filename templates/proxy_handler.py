@@ -10,7 +10,7 @@ This handler patches schemas in-transit before they reach the provider.
 from litellm.integrations.custom_logger import CustomLogger
 
 
-class ToolSchemaFixer(CustomLogger):
+class _ToolSchemaFixer(CustomLogger):
     async def async_pre_call_hook(self, user_api_key_dict, cache, data, call_type):
         if "tools" in data:
             for tool in data["tools"]:
@@ -18,6 +18,9 @@ class ToolSchemaFixer(CustomLogger):
                 if "parameters" in func:
                     _fix_array_schemas(func["parameters"])
         return data
+
+
+tool_schema_fixer = _ToolSchemaFixer()
 
 
 def _fix_array_schemas(schema):
