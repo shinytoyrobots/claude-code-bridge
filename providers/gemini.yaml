@@ -1,0 +1,55 @@
+# claude-code-bridge — Gemini provider template
+#
+# Tier mapping (used by Claude Code's per-skill model routing):
+#   Opus   → gemini-2.5-pro   (flagship — best quality, long context window)
+#   Sonnet → gemini-2.5-flash (workhorse — fast, cheap)
+#   Haiku  → gemini-2.5-flash (cheap tier — same as Sonnet)
+#
+# Why Sonnet and Haiku both map to 2.5 Flash:
+#   Gemini has two meaningful tiers: 2.5 Pro (highest quality, 1M+ token
+#   context) and 2.5 Flash (fast, cheap, still capable). There is no middle
+#   tier. Using 2.5 Pro for the Sonnet slot would significantly increase cost
+#   without proportional benefit for routine tasks. If your Sonnet-tier work
+#   needs Pro-level quality, swap the mapping below.
+#
+# Gemini's main differentiator is the long context window (1M+ tokens on Pro).
+# This makes it especially useful for research-heavy skills that need to
+# process large documents or codebases in a single pass.
+#
+# How to override:
+#   - Change a tier alias: edit the model_name field (e.g. change "sonnet" to
+#     point at gemini/gemini-2.5-pro instead of gemini/gemini-2.5-flash)
+#   - Add a model: copy any entry below and change model_name + model
+#   - Remove a model: delete or comment out the entry
+#
+# Shared settings (drop_params, etc.) live in templates/litellm.base.yaml.
+# Start LiteLLM with both configs:
+#   litellm --config templates/litellm.base.yaml --config providers/gemini.yaml
+
+model_list:
+  # --- Tier aliases (Claude Code reads these via ANTHROPIC_DEFAULT_*_MODEL) ---
+  - model_name: opus
+    litellm_params:
+      model: gemini/gemini-2.5-pro
+      api_key: os.environ/GEMINI_API_KEY
+
+  - model_name: sonnet
+    litellm_params:
+      model: gemini/gemini-2.5-flash
+      api_key: os.environ/GEMINI_API_KEY
+
+  - model_name: haiku
+    litellm_params:
+      model: gemini/gemini-2.5-flash
+      api_key: os.environ/GEMINI_API_KEY
+
+  # --- Raw model names (for direct use or debugging) ---
+  - model_name: gemini-2.5-pro
+    litellm_params:
+      model: gemini/gemini-2.5-pro
+      api_key: os.environ/GEMINI_API_KEY
+
+  - model_name: gemini-2.5-flash
+    litellm_params:
+      model: gemini/gemini-2.5-flash
+      api_key: os.environ/GEMINI_API_KEY
