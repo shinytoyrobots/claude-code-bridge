@@ -12,6 +12,10 @@ Two transformations:
   2. Fix malformed array schemas (missing `items`) that strict providers
      like OpenAI reject.
 
+Approach: monkey-patch uvicorn.run to wrap the app AFTER LiteLLM has
+fully initialized (config loaded, settings applied). This avoids
+interfering with LiteLLM's startup sequence.
+
 Usage (drop-in replacement for `litellm`):
   python3 start-proxy.py --config base.yaml --config provider.yaml --port 4000
 """
@@ -85,17 +89,6 @@ def _patch_request(data):
     return stripped > 0 or schema_fixes > 0
 
 
-def _update_content_length(scope, new_length):
-    """Return a new scope with the content-length header updated."""
-    new_headers = []
-    for name, value in scope.get("headers", []):
-        if name == b"content-length":
-            new_headers.append((b"content-length", str(new_length).encode()))
-        else:
-            new_headers.append((name, value))
-    return {**scope, "headers": new_headers}
-
-
 class _RequestPatcherMiddleware:
     """ASGI middleware that patches tool lists in POST request bodies."""
 
@@ -115,14 +108,25 @@ class _RequestPatcherMiddleware:
                 break
 
         body = b"".join(body_parts)
+        patched = False
 
         try:
             data = json.loads(body)
             if _patch_request(data):
                 body = json.dumps(data, ensure_ascii=False).encode("utf-8")
-                scope = _update_content_length(scope, len(body))
+                patched = True
         except (json.JSONDecodeError, Exception):
             pass
+
+        if patched:
+            # Update content-length to match modified body
+            new_headers = []
+            for name, value in scope.get("headers", []):
+                if name == b"content-length":
+                    new_headers.append((b"content-length", str(len(body)).encode()))
+                else:
+                    new_headers.append((name, value))
+            scope = {**scope, "headers": new_headers}
 
         body_sent = False
 
@@ -136,9 +140,20 @@ class _RequestPatcherMiddleware:
         await self.app(scope, patched_receive, send)
 
 
-from litellm.proxy.proxy_server import app  # noqa: E402
+# Monkey-patch uvicorn.run to wrap the app with our middleware AFTER
+# LiteLLM has fully initialized (config loaded, drop_params set, etc.).
+import uvicorn  # noqa: E402
 
-app.add_middleware(_RequestPatcherMiddleware)
+_original_uvicorn_run = uvicorn.run
+
+
+def _patched_uvicorn_run(app, **kwargs):
+    print("[claude-code-bridge] Wrapping LiteLLM app with request patcher", file=sys.stderr)
+    wrapped = _RequestPatcherMiddleware(app)
+    return _original_uvicorn_run(wrapped, **kwargs)
+
+
+uvicorn.run = _patched_uvicorn_run
 
 from litellm import run_server  # noqa: E402
 
