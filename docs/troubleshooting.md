@@ -2,14 +2,14 @@
 
 ## "auto mode unavailable" error
 
-**Symptom**: Claude Code refuses to start with an error about permission mode.
+**Symptom**: Claude Code refuses to start with an error about permission mode when you pass `--permission-mode auto`.
 
 **Cause**: Claude Code blocks `auto` permission mode for non-Anthropic models.
 
-**Fix**: Use `--permission-mode dontAsk`. The shell functions (`claude-deepseek`, `claude-openai`, `claude-gemini`) already pass this flag automatically. If you're launching Claude Code manually, add it:
+**Fix**: Use any other permission mode. The shell functions use Claude Code's normal `default` mode (interactive permission prompts). If you want to skip prompts, pass `dontAsk` explicitly:
 
 ```bash
-claude --permission-mode dontAsk
+claude-deepseek --permission-mode dontAsk
 ```
 
 ## Model not found / 404 from provider
@@ -71,11 +71,11 @@ lsof -i :4000
 
 **Cause**: Some MCP servers emit JSON schemas that Anthropic tolerates but OpenAI rejects. The most common issue is array properties missing the required `items` field.
 
-**Fix**: The proxy handler (`proxy_handler.py`) patches these schemas automatically. If you still see this error, verify the handler is loaded:
+**Fix**: The ASGI middleware in `start-proxy.py` patches these schemas automatically. If you still see this error:
 
-1. Check `litellm.base.yaml` includes `callbacks: proxy_handler.ToolSchemaFixer`
-2. Re-run the installer (`./install.sh`) to copy the latest `proxy_handler.py`
-3. Restart the shell function (it kills the old LiteLLM process automatically)
+1. Re-run the installer (`./install.sh`) to copy the latest `start-proxy.py`
+2. Kill any existing proxy: `kill $(lsof -i :4000 -t)`
+3. Restart the shell function (it starts a fresh proxy with the updated middleware)
 
 ## API key not set
 

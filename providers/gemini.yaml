@@ -17,33 +17,15 @@
 # process large documents or codebases in a single pass.
 #
 # How to override:
-#   - Change a tier alias: edit the model_name field (e.g. change "sonnet" to
-#     point at gemini/gemini-2.5-pro instead of gemini/gemini-2.5-flash)
 #   - Add a model: copy any entry below and change model_name + model
 #   - Remove a model: delete or comment out the entry
+#   - Change tier routing: edit the shell function's opus/sonnet/haiku variables
 #
 # Shared settings (drop_params, etc.) live in templates/litellm.base.yaml.
 # Start LiteLLM with both configs:
 #   litellm --config templates/litellm.base.yaml --config providers/gemini.yaml
 
 model_list:
-  # --- Tier aliases (Claude Code reads these via ANTHROPIC_DEFAULT_*_MODEL) ---
-  - model_name: opus
-    litellm_params:
-      model: gemini/gemini-2.5-pro
-      api_key: os.environ/GEMINI_API_KEY
-
-  - model_name: sonnet
-    litellm_params:
-      model: gemini/gemini-2.5-flash
-      api_key: os.environ/GEMINI_API_KEY
-
-  - model_name: haiku
-    litellm_params:
-      model: gemini/gemini-2.5-flash
-      api_key: os.environ/GEMINI_API_KEY
-
-  # --- Raw model names (for direct use or debugging) ---
   - model_name: gemini-2.5-pro
     litellm_params:
       model: gemini/gemini-2.5-pro

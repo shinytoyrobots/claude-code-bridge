@@ -65,6 +65,7 @@ The model IDs in this template (`gpt-5`, `gpt-5-mini`, `gpt-5-nano`) were pinned
 
 ## Known limitations
 
+- **Validated end-to-end**: OpenAI provider has been tested with the ASGI middleware (schema fixing, tool stripping, thinking override).
 - **Sonnet-slot ambiguity**: There is no single right answer for the Sonnet mapping. Benchmark against your own skill library.
 - **Extended thinking**: OpenAI models do not support Claude's extended thinking. Skills relying on `thinking` blocks will degrade gracefully.
 - **o-series reasoning models**: If you need strong reasoning, consider swapping the Opus tier to `o3` or `o4-mini` instead of `gpt-5`.

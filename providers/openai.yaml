@@ -19,33 +19,15 @@
 # update the litellm_params.model values below.
 #
 # How to override:
-#   - Change a tier alias: edit the model_name field (e.g. change "opus" to
-#     point at openai/o3 instead of openai/gpt-5)
 #   - Add a model: copy any entry below and change model_name + model
 #   - Remove a model: delete or comment out the entry
+#   - Change tier routing: edit the shell function's opus/sonnet/haiku variables
 #
 # Shared settings (drop_params, etc.) live in templates/litellm.base.yaml.
 # Start LiteLLM with both configs:
 #   litellm --config templates/litellm.base.yaml --config providers/openai.yaml
 
 model_list:
-  # --- Tier aliases (Claude Code reads these via ANTHROPIC_DEFAULT_*_MODEL) ---
-  - model_name: opus
-    litellm_params:
-      model: openai/gpt-5
-      api_key: os.environ/OPENAI_API_KEY
-
-  - model_name: sonnet
-    litellm_params:
-      model: openai/gpt-5-mini
-      api_key: os.environ/OPENAI_API_KEY
-
-  - model_name: haiku
-    litellm_params:
-      model: openai/gpt-5-nano
-      api_key: os.environ/OPENAI_API_KEY
-
-  # --- Raw model names (for direct use or debugging) ---
   - model_name: gpt-5
     litellm_params:
       model: openai/gpt-5

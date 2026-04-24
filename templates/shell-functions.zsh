@@ -108,7 +108,7 @@ _claude_code_bridge_launch() {
   ANTHROPIC_DEFAULT_OPUS_MODEL="$opus_model" \
   ANTHROPIC_DEFAULT_SONNET_MODEL="$sonnet_model" \
   ANTHROPIC_DEFAULT_HAIKU_MODEL="$haiku_model" \
-  claude --permission-mode dontAsk "$@"
+  claude "$@"
 
   # Clean up LiteLLM if we started it.
   if [[ -n "$litellm_pid" ]] && kill -0 "$litellm_pid" 2>/dev/null; then

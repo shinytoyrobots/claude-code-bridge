@@ -68,7 +68,7 @@ Sonnet and Haiku map to the same model for DeepSeek and Gemini because those pro
 
 ## What you need to know
 
-- **Permission mode**: Claude Code blocks `auto` mode for non-Anthropic models. The shell functions pass `--permission-mode dontAsk` automatically. If you want manual approval, drop that flag.
+- **Permission mode**: Claude Code uses its normal interactive permission mode (`default`) with non-Anthropic models. The only mode that is blocked is `auto`. You can pass any supported mode explicitly: `claude-deepseek --permission-mode dontAsk`.
 - **Skill compatibility**: Skills that rely on Claude-specific behavior (extended thinking, specific tool-calling quirks) may degrade on other models. Most skills work unchanged.
 - **LiteLLM is required**: Claude Code speaks Anthropic wire format exclusively. LiteLLM translates. There is no way around this dependency for OpenAI-format providers.
 - **The hook is optional but recommended**: The SessionStart hook (`morph-session`) helps non-Claude models understand Claude Code's Agent tool, subagent patterns, and skill frontmatter. Without it, models may fumble on tool calls.
