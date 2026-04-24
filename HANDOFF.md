@@ -1,4 +1,4 @@
-# claude-code-bridge Handoff Notes
+# claude-code-provider-kit Handoff Notes
 
 **Date**: 2026-04-24
 **Last PR merged**: #22 — fix(deepseek): bypass LiteLLM DeepSeek provider

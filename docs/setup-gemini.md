@@ -3,7 +3,7 @@
 ## Prerequisites
 
 - [Claude Code](https://docs.anthropic.com/en/docs/claude-code) installed and working
-- [LiteLLM](https://docs.litellm.ai/) installed: `pip install 'litellm[proxy]'`
+- [LiteLLM](https://docs.litellm.ai/) installed: `pip install 'litellm[proxy]==1.63.2'`
 - A Google Gemini API key from [aistudio.google.com](https://aistudio.google.com/app/apikey)
 
 ## API key setup
@@ -20,8 +20,8 @@ Add this to your `~/.zshrc` or `~/.bashrc` to persist across sessions.
 ## Install
 
 ```bash
-git clone https://github.com/shinytoyrobots/claude-code-bridge.git
-cd claude-code-bridge
+git clone https://github.com/shinytoyrobots/claude-code-provider-kit.git
+cd claude-code-provider-kit
 ./install.sh --providers gemini
 ```
 
@@ -63,7 +63,7 @@ If your workflow involves large context, Gemini is the strongest choice for the 
 
 - **Validated end-to-end**: Gemini provider has been tested with the ASGI middleware (schema fixing, tool stripping, thinking override).
 - **Two-tier mapping**: Like DeepSeek, Gemini has two meaningful tiers rather than three. Sonnet and Haiku collapse to the same model.
-- **Extended thinking**: Gemini models do not support Claude's extended thinking. Skills relying on `thinking` blocks will degrade gracefully.
+- **Extended thinking**: Gemini models don't support Claude's extended thinking. Skills relying on `thinking` blocks will degrade gracefully.
 - **Parallel subagents**: Non-Claude models handle sequential subagent orchestration more reliably. The SessionStart hook advises sequential launches.
 
 ## Troubleshooting

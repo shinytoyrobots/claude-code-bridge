@@ -1,4 +1,4 @@
-# claude-code-bridge — DeepSeek provider template
+# claude-code-provider-kit — DeepSeek provider template
 #
 # Routes through LiteLLM's OpenAI provider (not DeepSeek provider) to avoid
 # the beta endpoint which forces reasoning mode. DeepSeek's API is

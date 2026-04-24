@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# morph-session — SessionStart hook for claude-code-bridge
+# morph-session — SessionStart hook for claude-code-provider-kit
 # Detects non-Claude model execution and injects guidance about
 # Claude Code's tool-use idioms so non-Claude models behave correctly.
 #

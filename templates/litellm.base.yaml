@@ -1,4 +1,4 @@
-# claude-code-bridge — shared LiteLLM proxy settings
+# claude-code-provider-kit — shared LiteLLM proxy settings
 # This file contains settings common to all providers.
 # Provider-specific model lists live in providers/*.yaml.
 #

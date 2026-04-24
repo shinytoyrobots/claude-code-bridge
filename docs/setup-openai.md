@@ -3,7 +3,7 @@
 ## Prerequisites
 
 - [Claude Code](https://docs.anthropic.com/en/docs/claude-code) installed and working
-- [LiteLLM](https://docs.litellm.ai/) installed: `pip install 'litellm[proxy]'`
+- [LiteLLM](https://docs.litellm.ai/) installed: `pip install 'litellm[proxy]==1.63.2'`
 - An OpenAI API key from [platform.openai.com](https://platform.openai.com/account/api-keys)
 
 ## API key setup
@@ -20,8 +20,8 @@ Add this to your `~/.zshrc` or `~/.bashrc` to persist across sessions.
 ## Install
 
 ```bash
-git clone https://github.com/shinytoyrobots/claude-code-bridge.git
-cd claude-code-bridge
+git clone https://github.com/shinytoyrobots/claude-code-provider-kit.git
+cd claude-code-provider-kit
 ./install.sh --providers openai
 ```
 
@@ -67,7 +67,7 @@ The model IDs in this template (`gpt-5`, `gpt-5-mini`, `gpt-5-nano`) were pinned
 
 - **Validated end-to-end**: OpenAI provider has been tested with the ASGI middleware (schema fixing, tool stripping, thinking override).
 - **Sonnet-slot ambiguity**: There is no single right answer for the Sonnet mapping. Benchmark against your own skill library.
-- **Extended thinking**: OpenAI models do not support Claude's extended thinking. Skills relying on `thinking` blocks will degrade gracefully.
+- **Extended thinking**: OpenAI models don't support Claude's extended thinking. Skills relying on `thinking` blocks will degrade gracefully.
 - **o-series reasoning models**: If you need strong reasoning, consider swapping the Opus tier to `o3` or `o4-mini` instead of `gpt-5`.
 
 ## Troubleshooting

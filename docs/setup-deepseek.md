@@ -5,7 +5,7 @@
 ## Prerequisites
 
 - [Claude Code](https://docs.anthropic.com/en/docs/claude-code) installed and working
-- [LiteLLM](https://docs.litellm.ai/) installed: `pip install 'litellm[proxy]'`
+- [LiteLLM](https://docs.litellm.ai/) installed: `pip install 'litellm[proxy]==1.63.2'`
 - A DeepSeek API key from [platform.deepseek.com](https://platform.deepseek.com)
 
 ## API key setup
@@ -22,8 +22,8 @@ Add this to your `~/.zshrc` or `~/.bashrc` to persist across sessions.
 ## Install
 
 ```bash
-git clone https://github.com/shinytoyrobots/claude-code-bridge.git
-cd claude-code-bridge
+git clone https://github.com/shinytoyrobots/claude-code-provider-kit.git
+cd claude-code-provider-kit
 ./install.sh --providers deepseek
 ```
 
@@ -67,7 +67,7 @@ These are accessible when explicitly requested but not part of the tier mapping.
 ## Known limitations
 
 - **Validated end-to-end**: This is the most-tested path. No known issues with standard skill execution.
-- **Extended thinking**: DeepSeek models do not support Claude's extended thinking feature. Skills that rely on `thinking` blocks will degrade gracefully (the model simply skips them).
+- **Extended thinking**: DeepSeek models don't support Claude's extended thinking feature. Skills that rely on `thinking` blocks will degrade gracefully (the model simply skips them).
 - **Parallel subagents**: Non-Claude models handle sequential subagent orchestration more reliably than parallel. The SessionStart hook advises the model to prefer sequential launches.
 
 ## Troubleshooting

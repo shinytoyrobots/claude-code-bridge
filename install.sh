@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# claude-code-bridge installer
+# claude-code-provider-kit installer
 # Idempotent install/uninstall of shell functions, SessionStart hook,
 # and provider configs for running Claude Code with non-Anthropic models.
 
-MARKER_START="# >>> claude-code-bridge >>>"
-MARKER_END="# <<< claude-code-bridge <<<"
-INSTALL_DIR="${HOME}/.config/claude-code-bridge"
-TMP_SUFFIX=".claude-code-bridge.tmp"
+MARKER_START="# >>> claude-code-provider-kit >>>"
+MARKER_END="# <<< claude-code-provider-kit <<<"
+INSTALL_DIR="${HOME}/.config/claude-code-provider-kit"
+TMP_SUFFIX=".claude-code-provider-kit.tmp"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ALL_PROVIDERS="deepseek openai gemini"
 
@@ -140,7 +140,7 @@ Usage: install.sh [OPTIONS]
 
 Options:
   --dry-run              Print planned changes without modifying anything
-  --uninstall            Remove claude-code-bridge from your system
+  --uninstall            Remove claude-code-provider-kit from your system
   --providers LIST       Comma-separated providers to install (default: all)
                          Valid: deepseek, openai, gemini
   --help                 Show this help message
@@ -198,7 +198,7 @@ RC_FILE="$(rc_file_for_shell "$USER_SHELL")"
 # --- Uninstall ---
 
 if "$UNINSTALL"; then
-  printf "claude-code-bridge: uninstalling\n"
+  printf "claude-code-provider-kit: uninstalling\n"
 
   remove_marker_block "$RC_FILE"
   success "Removed shell functions from $RC_FILE"
@@ -212,7 +212,7 @@ if "$UNINSTALL"; then
   fi
   success "Removed hook and config directory"
 
-  printf "\nclaude-code-bridge: uninstalled. Restart your shell to apply.\n"
+  printf "\nclaude-code-provider-kit: uninstalled. Restart your shell to apply.\n"
   exit 0
 fi
 
@@ -222,7 +222,7 @@ if ! "$DRY_RUN" && ! command -v litellm >/dev/null 2>&1; then
   error "LiteLLM is not installed."
   error ""
   error "Install it with:"
-  error "  pip install 'litellm[proxy]'"
+  error "  pip install 'litellm[proxy]==1.63.2'"
   error ""
   error "Then re-run this installer."
   exit 1
@@ -230,7 +230,7 @@ fi
 
 # --- Install ---
 
-printf "claude-code-bridge: installing\n"
+printf "claude-code-provider-kit: installing\n"
 printf "  shell: %s (%s)\n" "$USER_SHELL" "$RC_FILE"
 printf "  providers: %s\n" "$PROVIDERS"
 printf "  install dir: %s\n" "$INSTALL_DIR"
@@ -274,7 +274,7 @@ success "Installed SessionStart hook"
 add_marker_block "$RC_FILE" "$USER_SHELL"
 success "Added shell functions to $RC_FILE"
 
-printf "\nclaude-code-bridge: installed successfully.\n"
+printf "\nclaude-code-provider-kit: installed successfully.\n"
 printf "\nNext steps:\n"
 printf "  1. Restart your shell (or run: source %s)\n" "$RC_FILE"
 printf "  2. Set your API key:\n"

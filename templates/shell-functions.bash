@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# claude-code-bridge — shell functions for launching Claude Code with non-Anthropic providers
+# claude-code-provider-kit — shell functions for launching Claude Code with non-Anthropic providers
 # Source this file from your .bashrc:
-#   source /path/to/claude-code-bridge/templates/shell-functions.bash
+#   source /path/to/claude-code-provider-kit/templates/shell-functions.bash
 
-_claude_code_bridge_launch() {
+_provider_kit_launch() {
   local provider="$1"
   shift
   local api_key_var config_file
@@ -35,14 +35,14 @@ _claude_code_bridge_launch() {
       default_model="gemini-2.5-flash"
       ;;
     *)
-      echo "claude-code-bridge: unknown provider '$provider'" >&2
+      echo "claude-code-provider-kit: unknown provider '$provider'" >&2
       return 1
       ;;
   esac
 
   # Check API key
   if [ -z "${!api_key_var:-}" ]; then
-    echo "claude-code-bridge: $api_key_var is not set." >&2
+    echo "claude-code-provider-kit: $api_key_var is not set." >&2
     echo "Export it in your shell: export $api_key_var=\"your-key-here\"" >&2
     return 1
   fi
@@ -50,8 +50,8 @@ _claude_code_bridge_launch() {
   local port="${CLAUDE_BRIDGE_PROXY_PORT:-4000}"
 
   # Resolve config paths relative to this script's install location.
-  # The installer places configs in ~/.config/claude-code-bridge/.
-  local config_dir="${CLAUDE_CODE_BRIDGE_HOME:-${HOME}/.config/claude-code-bridge}"
+  # The installer places configs in ~/.config/claude-code-provider-kit/.
+  local config_dir="${CLAUDE_PROVIDER_KIT_HOME:-${HOME}/.config/claude-code-provider-kit}"
   local base_config="${config_dir}/templates/litellm.base.yaml"
   local provider_config="${config_dir}/${config_file}"
 
@@ -62,13 +62,13 @@ _claude_code_bridge_launch() {
       port=$((port + 1))
     done
     if nc -z localhost "$port" 2>/dev/null; then
-      echo "claude-code-bridge: ports 4000-4010 all in use." >&2
+      echo "claude-code-provider-kit: ports 4000-4010 all in use." >&2
       echo "Set CLAUDE_BRIDGE_PROXY_PORT to an available port." >&2
       return 1
     fi
   fi
 
-  local log="/tmp/claude-code-bridge-litellm-${port}.log"
+  local log="/tmp/claude-code-provider-kit-litellm-${port}.log"
   local litellm_pid=""
 
   # Start LiteLLM if not already running on the selected port.
@@ -92,7 +92,7 @@ _claude_code_bridge_launch() {
     done
 
     if ! nc -z localhost "$port" 2>/dev/null; then
-      echo "claude-code-bridge: LiteLLM failed to start within 10 seconds." >&2
+      echo "claude-code-provider-kit: LiteLLM failed to start within 10 seconds." >&2
       echo "Check the log: $log" >&2
       return 1
     fi
@@ -118,13 +118,13 @@ _claude_code_bridge_launch() {
 }
 
 claude-deepseek() {
-  _claude_code_bridge_launch deepseek "$@"
+  _provider_kit_launch deepseek "$@"
 }
 
 claude-openai() {
-  _claude_code_bridge_launch openai "$@"
+  _provider_kit_launch openai "$@"
 }
 
 claude-gemini() {
-  _claude_code_bridge_launch gemini "$@"
+  _provider_kit_launch gemini "$@"
 }

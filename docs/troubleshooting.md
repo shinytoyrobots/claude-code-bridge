@@ -14,9 +14,9 @@ claude-deepseek --permission-mode dontAsk
 
 ## Model not found / 404 from provider
 
-**Symptom**: Requests fail with "model not found", "The model does not exist", or a 404 error from the provider.
+**Symptom**: Requests fail with "model not found," "The model doesn't exist," or a 404 error from the provider.
 
-**Cause**: The model ID in the provider YAML does not match the provider's actual model catalog. Model IDs change as providers release new versions.
+**Cause**: The model ID in the provider YAML doesn't match the provider's actual model catalog. Model IDs change as providers release new versions.
 
 **Fix**: Verify the model ID against your provider's API, then update the local config:
 
@@ -34,7 +34,7 @@ curl -s "https://generativelanguage.googleapis.com/v1beta/models?key=$GEMINI_API
   | python3 -m json.tool
 ```
 
-Update the model ID in `~/.config/claude-code-bridge/providers/{provider}.yaml`. For example, if `deepseek-v4-pro` has been renamed:
+Update the model ID in `~/.config/claude-code-provider-kit/providers/{provider}.yaml`. For example, if `deepseek-v4-pro` has been renamed:
 
 ```yaml
 - model_name: opus
@@ -50,7 +50,7 @@ Restart your shell function after editing the YAML.
 
 **Cause**: Other processes are using the default port range.
 
-By default, the shell functions auto-scan ports 4000-4010 to find a free one. You only see this error if all 11 ports are occupied.
+By default, the shell functions scan ports automatically across 4000-4010 to find a free one. You only see this error if all 11 ports are occupied.
 
 **Fix**: Set a specific port you know is free:
 
@@ -79,7 +79,7 @@ lsof -i :4000
 
 ## API key not set
 
-**Symptom**: `claude-code-bridge: DEEPSEEK_API_KEY is not set.`
+**Symptom**: `claude-code-provider-kit: DEEPSEEK_API_KEY is not set.`
 
 **Fix**: Export the API key for your provider:
 
@@ -119,7 +119,7 @@ Most models will identify themselves accurately.
 
 ```bash
 # The log file location depends on your port
-cat /tmp/claude-code-bridge-litellm-4000.log
+cat /tmp/claude-code-provider-kit-litellm-4000.log
 ```
 
 Look for lines showing the upstream model being called.
@@ -141,7 +141,7 @@ This produces detailed request/response logs showing the exact model and paramet
 
 **Cause**: LiteLLM updates frequently and occasionally introduces breaking changes in Anthropic format translation.
 
-**Fix**: Pin to a known working version. As of this release, the kit was tested with LiteLLM 1.x. To install a specific version:
+**Fix**: Pin to the version this kit is tested against — LiteLLM 1.63.2:
 
 ```bash
 pip install 'litellm[proxy]==1.63.2'
@@ -153,10 +153,10 @@ Check the [LiteLLM changelog](https://github.com/BerriAI/litellm/releases) if yo
 
 **Symptom**: `command not found: litellm` when running a shell function.
 
-**Fix**: Install LiteLLM:
+**Fix**: Install LiteLLM at the tested version:
 
 ```bash
-pip install 'litellm[proxy]'
+pip install 'litellm[proxy]==1.63.2'
 ```
 
 If installed but not found, it may not be on your PATH. Check:
