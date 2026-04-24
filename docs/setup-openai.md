@@ -69,6 +69,7 @@ The model IDs in this template (`gpt-5`, `gpt-5-mini`, `gpt-5-nano`) were pinned
 - **Sonnet-slot ambiguity**: There is no single right answer for the Sonnet mapping. Benchmark against your own skill library.
 - **Extended thinking**: OpenAI models don't support Claude's extended thinking. Skills relying on `thinking` blocks will degrade gracefully.
 - **o-series reasoning models**: If you need strong reasoning, consider swapping the Opus tier to `o3` or `o4-mini` instead of `gpt-5`.
+- **Custom agents**: OpenAI models may not follow the launch convention (`subagent_type: general-purpose`) and instead choose a different subagent type (e.g. `Explore`). This can cause failures in non-git directories. If custom agent invocation fails, try running in a git-initialized directory.
 
 ## Troubleshooting
 

@@ -66,6 +66,7 @@ We're actively working on V4 configuration. Once resolved, the provider config w
 - **Validated end-to-end**: This is the most-tested path. No known issues with standard skill execution.
 - **Extended thinking**: DeepSeek models don't support Claude's extended thinking feature. Skills that rely on `thinking` blocks will degrade gracefully (the model simply skips them).
 - **Parallel subagents**: Non-Claude models handle sequential subagent orchestration more reliably than parallel. The SessionStart hook advises the model to prefer sequential launches.
+- **Custom agents**: DeepSeek follows the launch convention (`subagent_type: general-purpose`) reliably. No known issues with custom agent invocation.
 
 ## Troubleshooting
 

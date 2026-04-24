@@ -36,6 +36,12 @@ The V4 model names (`deepseek-v4-flash`, `deepseek-v4-pro`) trigger thinking mod
 
 This is the highest-priority technical risk for the DeepSeek provider.
 
+### 3. ~~Custom agent definitions not recognized by non-Claude models~~ — RESOLVED (Sprint 2)
+
+Resolved in sprint 2 via the enhanced `morph-session` SessionStart hook. The hook now enumerates custom agent definitions in `~/.claude/commands/agents/`, parses their YAML frontmatter, and injects a catalog + launch convention into the session guidance. Non-Claude models are told to use `subagent_type: "general-purpose"` with a prompt referencing the agent file path.
+
+**Validation results (2026-04-24):** DeepSeek follows the convention exactly. Gemini launches agents successfully (advisory: may report wrong subagent_type in text output). OpenAI does not reliably follow the launch convention — it may choose a different subagent_type, causing failures in non-git directories. See `sprints/claude-code-bridge/sprint-2/validation-report.md` for full details.
+
 ## Architecture Notes
 
 - `templates/start-proxy.py` — ASGI middleware wrapping LiteLLM via uvicorn.run monkey-patch. This is the only reliable interception point for Anthropic-format requests (LiteLLM's callback hooks don't fire in the passthrough path).
