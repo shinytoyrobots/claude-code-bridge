@@ -1,23 +1,23 @@
-claude-code-bridge: installing
+claude-code-provider-kit: installing
   shell: bash (HOME/.bashrc)
   providers: deepseek openai gemini
-  install dir: HOME/.config/claude-code-bridge
+  install dir: HOME/.config/claude-code-provider-kit
 
-  COPY REPO_DIR/templates/litellm.base.yaml -> HOME/.config/claude-code-bridge/templates/litellm.base.yaml
-  COPY REPO_DIR/templates/start-proxy.py -> HOME/.config/claude-code-bridge/templates/start-proxy.py
-  COPY REPO_DIR/templates/shell-functions.zsh -> HOME/.config/claude-code-bridge/templates/shell-functions.zsh
-  COPY REPO_DIR/templates/shell-functions.bash -> HOME/.config/claude-code-bridge/templates/shell-functions.bash
+  COPY REPO_DIR/templates/litellm.base.yaml -> HOME/.config/claude-code-provider-kit/templates/litellm.base.yaml
+  COPY REPO_DIR/templates/start-proxy.py -> HOME/.config/claude-code-provider-kit/templates/start-proxy.py
+  COPY REPO_DIR/templates/shell-functions.zsh -> HOME/.config/claude-code-provider-kit/templates/shell-functions.zsh
+  COPY REPO_DIR/templates/shell-functions.bash -> HOME/.config/claude-code-provider-kit/templates/shell-functions.bash
   [ok] Copied shell function templates
-  COPY REPO_DIR/providers/deepseek.yaml -> HOME/.config/claude-code-bridge/providers/deepseek.yaml
-  COPY REPO_DIR/providers/openai.yaml -> HOME/.config/claude-code-bridge/providers/openai.yaml
-  COPY REPO_DIR/providers/gemini.yaml -> HOME/.config/claude-code-bridge/providers/gemini.yaml
+  COPY REPO_DIR/providers/deepseek.yaml -> HOME/.config/claude-code-provider-kit/providers/deepseek.yaml
+  COPY REPO_DIR/providers/openai.yaml -> HOME/.config/claude-code-provider-kit/providers/openai.yaml
+  COPY REPO_DIR/providers/gemini.yaml -> HOME/.config/claude-code-provider-kit/providers/gemini.yaml
   [ok] Copied provider configs: deepseek openai gemini
   COPY REPO_DIR/templates/hooks/morph-session -> HOME/.claude/hooks/morph-session
   [ok] Installed SessionStart hook
-  ADD marker block to HOME/.bashrc (source HOME/.config/claude-code-bridge/templates/shell-functions.bash)
+  ADD marker block to HOME/.bashrc (source HOME/.config/claude-code-provider-kit/templates/shell-functions.bash)
   [ok] Added shell functions to HOME/.bashrc
 
-claude-code-bridge: installed successfully.
+claude-code-provider-kit: installed successfully.
 
 Next steps:
   1. Restart your shell (or run: source HOME/.bashrc)

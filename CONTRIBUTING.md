@@ -1,4 +1,4 @@
-# Contributing to claude-code-bridge
+# Contributing to claude-code-provider-kit
 
 Thanks for your interest in contributing. This project is an opinionated, small-scope configuration kit for running Claude Code against non-Anthropic models.
 

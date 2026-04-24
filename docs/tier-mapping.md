@@ -2,13 +2,13 @@
 
 ## How skill routing works
 
-This is the single most valuable behavior claude-code-bridge enables: **your skill frontmatter `model: opus` routes to the provider's flagship tier automatically.**
+This is the single most valuable behavior claude-code-provider-kit enables: **your skill frontmatter `model: opus` routes to the provider's flagship tier automatically.**
 
 Here's the chain:
 
 1. A skill's frontmatter declares `model: opus` (or `sonnet` or `haiku`)
 2. Claude Code reads the corresponding environment variable: `ANTHROPIC_DEFAULT_OPUS_MODEL`
-3. That variable is set by the shell function (e.g., `claude-deepseek` sets it to `deepseek-v4-pro`)
+3. That variable is set by the shell function (for example, `claude-deepseek` sets it to `deepseek-v4-pro`)
 4. Claude Code sends the request to LiteLLM at `ANTHROPIC_BASE_URL`
 5. LiteLLM matches the model alias and routes to the provider's actual model
 

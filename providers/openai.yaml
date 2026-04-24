@@ -1,4 +1,4 @@
-# claude-code-bridge — OpenAI provider template
+# claude-code-provider-kit — OpenAI provider template
 #
 # Tier mapping (used by Claude Code's per-skill model routing):
 #   Opus   → gpt-5       (flagship — highest quality)

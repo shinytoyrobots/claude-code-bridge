@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""claude-code-bridge — LiteLLM proxy launcher with request-patching middleware.
+"""claude-code-provider-kit — LiteLLM proxy launcher with request-patching middleware.
 
 LiteLLM's callback hooks don't fire for Anthropic-format requests (which
 Claude Code sends). This script wraps the LiteLLM proxy app with raw ASGI
@@ -103,7 +103,7 @@ def _patch_request(data):
     stripped = original_count - len(tools)
     if stripped:
         print(
-            f"[claude-code-bridge] Stripped {stripped} remote MCP tools ({original_count} → {len(tools)})",
+            f"[claude-code-provider-kit] Stripped {stripped} remote MCP tools ({original_count} → {len(tools)})",
             file=sys.stderr,
         )
 
@@ -119,7 +119,7 @@ def _patch_request(data):
 
     if schema_fixes:
         print(
-            f"[claude-code-bridge] Fixed {schema_fixes} array schema(s) missing 'items'",
+            f"[claude-code-provider-kit] Fixed {schema_fixes} array schema(s) missing 'items'",
             file=sys.stderr,
         )
 
@@ -191,7 +191,7 @@ def _patched_uvicorn_run(app, **kwargs):
         from importlib import import_module
         module_path, attr = app.split(":")
         app = getattr(import_module(module_path), attr)
-    print("[claude-code-bridge] Wrapping LiteLLM app with request patcher", file=sys.stderr)
+    print("[claude-code-provider-kit] Wrapping LiteLLM app with request patcher", file=sys.stderr)
     wrapped = _RequestPatcherMiddleware(app)
     return _original_uvicorn_run(wrapped, **kwargs)
 

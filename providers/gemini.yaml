@@ -1,4 +1,4 @@
-# claude-code-bridge — Gemini provider template
+# claude-code-provider-kit — Gemini provider template
 #
 # Tier mapping (used by Claude Code's per-skill model routing):
 #   Opus   → gemini-2.5-pro   (flagship — best quality, long context window)
